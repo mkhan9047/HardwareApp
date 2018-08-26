@@ -5,21 +5,31 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="Dashboard" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_add_circle_outline_black_24dp"
+            android:title="Add Device" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_add_btn"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Add Button" />
+
         <item
-            android:id="@+id/nav_manage"
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="History" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_timer_black_24dp"
+            android:title="Schedule Task" />
+
+        <item
+            android:id="@+id/nav_setting"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Setting" />
     </group>
 
     <item android:title="Communicate">
@@ -29,9 +39,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="About Us" />
         </menu>
     </item>
 

@@ -1,8 +1,10 @@
-package app.device.com.hardwareapp;
+package app.device.com.hardwareapp.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Dashboard extends AppCompatActivity
+import app.device.com.hardwareapp.Fragment.AddButton;
+import app.device.com.hardwareapp.Fragment.AddDevices;
+import app.device.com.hardwareapp.Fragment.DashboardFragment;
+import app.device.com.hardwareapp.Fragment.ScheduleTask;
+import app.device.com.hardwareapp.R;
+
+public class Main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +33,7 @@ public class Dashboard extends AppCompatActivity
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -32,6 +44,9 @@ public class Dashboard extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragment = new DashboardFragment();
+        FragmentTransction();
     }
 
     @Override
@@ -72,22 +87,30 @@ public class Dashboard extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if(id == R.id.nav_add){
+            fragment = new AddDevices();
+            FragmentTransction();
+        }else if(id == R.id.nav_dashboard){
+            fragment = new DashboardFragment();
+            FragmentTransction();
+        }else if(id == R.id.nav_add_btn){
+            fragment = new AddButton();
+            FragmentTransction();
+        }else if(id == R.id.nav_schedule){
+            fragment = new ScheduleTask();
+            FragmentTransction();
         }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void FragmentTransction(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame,fragment);
+        fragmentTransaction.commit();
     }
 }

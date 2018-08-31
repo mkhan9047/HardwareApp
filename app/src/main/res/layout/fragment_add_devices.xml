@@ -52,6 +52,7 @@
         android:drawablePadding="8dp"
         android:singleLine="true"
         android:inputType="text"
+        android:id="@+id/add_device_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </android.support.design.widget.TextInputLayout>
@@ -66,6 +67,7 @@
             android:drawableStart="@drawable/ic_call_black_24dp"
             android:drawablePadding="8dp"
             android:singleLine="true"
+            android:id="@+id/add_device_phone_number"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -78,6 +80,7 @@
     android:layout_marginEnd="50dp"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:id="@+id/add_device_btn"
     android:textColor="@color/colorWhite"
     android:text="Done"
     android:background="@color/colorAccent"

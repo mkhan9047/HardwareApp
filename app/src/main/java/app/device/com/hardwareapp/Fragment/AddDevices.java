@@ -47,9 +47,11 @@ public class AddDevices extends Fragment {
             public void onClick(View view) {
 
                     if(DatabaseOperation.AddDevice(getActivity(), deviceName.getText().toString(), phoneNumber.getText().toString())) {
+
                         Toast.makeText(getActivity(), "Save Success!", Toast.LENGTH_SHORT).show();
 
                     }else{
+
                         Toast.makeText(getActivity(), "Not Save Success!", Toast.LENGTH_SHORT).show();
                     }
             }

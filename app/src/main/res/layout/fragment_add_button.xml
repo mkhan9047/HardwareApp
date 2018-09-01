@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="app.device.com.hardwareapp.Fragment.AddButton">
 
 
@@ -101,7 +102,7 @@
                             android:layout_width="150dp"
                             app:ms_text_color="#FFFF"
                             app:ms_background_color="@color/colorPrimary"
-                            android:layout_height="35dp"/>
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -135,13 +136,13 @@
                         android:layout_weight="1.5"
                         android:gravity="start"
                         android:layout_height="match_parent">
-                        <com.jaredrummler.materialspinner.MaterialSpinner
+                        <Spinner
                             android:id="@+id/spiner_relay_add_btn"
                             android:layout_gravity="center_vertical"
-                            android:layout_width="70dp"
-                            app:ms_text_color="#FFFF"
-                            app:ms_background_color="@color/colorPrimary"
-                            android:layout_height="35dp"/>
+                            android:layout_width="wrap_content"
+                            android:padding="10dp"
+                            android:entries="@array/relay_no"
+                            android:layout_height="wrap_content"/>
 
                     </LinearLayout>
 
@@ -159,6 +160,7 @@
                         android:layout_weight="1"
                         android:gravity="start|center_vertical"
                         android:layout_height="match_parent">
+
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="17sp"
@@ -248,6 +250,7 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -261,11 +264,13 @@
                         android:orientation="horizontal"
                         android:id="@+id/add_button_radio"
                         android:layout_height="wrap_content">
+
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Light"
+                            android:id="@+id/radio_light"
                             />
 
                         <RadioButton
@@ -273,8 +278,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Fan"
+                            android:id="@+id/radio_fan"
                             />
+
                     </RadioGroup>
+
                 </LinearLayout>
 
 

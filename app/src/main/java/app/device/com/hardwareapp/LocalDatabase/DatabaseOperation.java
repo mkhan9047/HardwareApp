@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,16 +19,16 @@ import app.device.com.hardwareapp.Model.Device;
 public class DatabaseOperation {
 
 
-    public static boolean AddDevice(Context context, String DeviceName, String phoneNumber){
+    public static boolean AddDevice(Context context, String DeviceName, String phoneNumber) {
 
         boolean saveSuccess = false;
 
-        ContentValues contentValues  = new ContentValues();
+        ContentValues contentValues = new ContentValues();
         contentValues.put("device_name", DeviceName);
         contentValues.put("phone_number", phoneNumber);
 
 
-        try{
+        try {
             SQLiteOpenHelper helper = new DatabaseHelper(context);
 
             SQLiteDatabase database = helper.getWritableDatabase();
@@ -36,15 +37,14 @@ public class DatabaseOperation {
 
             saveSuccess = true;
 
-        }catch (SQLiteConstraintException e){
+        } catch (SQLiteConstraintException e) {
 
 
-
-            if(e.getMessage().contains("UNIQUE") && e.getMessage().contains("phone_number")){
+            if (e.getMessage().contains("UNIQUE") && e.getMessage().contains("phone_number")) {
 
                 Toast.makeText(context, "Phone Number Used, Try new one!", Toast.LENGTH_SHORT).show();
                 saveSuccess = false;
-            }else if(e.getMessage().contains("UNIQUE") && e.getMessage().contains("device_name")){
+            } else if (e.getMessage().contains("UNIQUE") && e.getMessage().contains("device_name")) {
 
                 Toast.makeText(context, "Device Name Used, Try new one!", Toast.LENGTH_SHORT).show();
                 saveSuccess = false;
@@ -58,7 +58,7 @@ public class DatabaseOperation {
     }
 
 
-    public static boolean AddButton(Context context, int deviceId, int relay_no, String btn_name, String onCode, String offCode, String btnType, int status){
+    public static boolean AddButton(Context context, int deviceId, int relay_no, String btn_name, String onCode, String offCode, String btnType, int status) {
 
         boolean saveSuccess = false;
 
@@ -68,42 +68,80 @@ public class DatabaseOperation {
         contentValues.put("btn_name", btn_name);
         contentValues.put("ON_CODE", onCode);
         contentValues.put("OFF_CODE", offCode);
-        contentValues.put("btn_type",btnType);
+        contentValues.put("btn_type", btnType);
         contentValues.put("status", status);
 
-        try{
+        try {
             SQLiteOpenHelper helper = new DatabaseHelper(context);
             SQLiteDatabase database = helper.getWritableDatabase();
             database.insertOrThrow("button", null, contentValues);
             saveSuccess = true;
-        }catch (SQLiteConstraintException e){
+        } catch (SQLiteException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            saveSuccess  = false;
+            Log.e("databaseError", e.getMessage());
+            saveSuccess = false;
         }
 
 
         return saveSuccess;
     }
 
-    public static List<Device> returnAllDevices(Context context){
-        List<Device> devices  = new ArrayList<>();
+    public static List<Device> returnAllDevices(Context context) {
+
+        List<Device> devices = new ArrayList<>();
+
         Cursor cursor = null;
-        try{
+
+        try {
             SQLiteOpenHelper helper = new DatabaseHelper(context);
             SQLiteDatabase database = helper.getReadableDatabase();
 
-             cursor = database.query("Device", new String[]{"device_name", "phone_number", "device_id"},  null, null, null, null, null, null);
+            cursor = database.query("Device", new String[]{"device_name", "phone_number", "device_id"}, null, null, null, null, null, null);
 
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
+
                 devices.add(new Device(cursor.getString(0), cursor.getString(1), cursor.getInt(2)));
+
             }
 
-        }catch (SQLiteException e){
+        } catch (SQLiteException e) {
+
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
         if (cursor != null) {
+
             cursor.close();
+
         }
+
         return devices;
     }
+
+    public static boolean isDeviceNull(Context context) {
+        Cursor cursor = null;
+        try {
+            SQLiteOpenHelper helper = new DatabaseHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+
+            cursor = database.query("Device", new String[]{"device_name", "phone_number", "device_id"}, null, null, null, null, null, null);
+
+            if (cursor.getCount() == 0) {
+                return true;
+            }
+
+        } catch (SQLiteException e) {
+
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+        if (cursor != null) {
+
+            cursor.close();
+
+        }
+        return false;
+    }
+
+
 }

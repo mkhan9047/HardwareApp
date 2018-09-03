@@ -2,7 +2,7 @@ package app.device.com.hardwareapp.Model;
 
 public class Button {
 
-    private String DeviceName;
+    private int deviceID;
     private String buttonName;
     private String onButtonCode;
     private String ofButtonCode;
@@ -10,8 +10,8 @@ public class Button {
     private int relayNo;
     private int status;
 
-    public Button(String deviceName, String buttonName, String onButtonCode, String ofButtonCode, int relayNo, int status , String type) {
-        DeviceName = deviceName;
+    public Button(int deviceID, String buttonName, String onButtonCode, String ofButtonCode, int relayNo, int status , String type) {
+        this.deviceID = deviceID;
         this.buttonName = buttonName;
         this.onButtonCode = onButtonCode;
         this.ofButtonCode = ofButtonCode;
@@ -24,8 +24,8 @@ public class Button {
         return type;
     }
 
-    public String getDeviceName() {
-        return DeviceName;
+    public int getDeviceID() {
+        return deviceID;
     }
 
     public String getButtonName() {

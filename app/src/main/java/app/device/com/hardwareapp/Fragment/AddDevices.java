@@ -46,14 +46,28 @@ public class AddDevices extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    if(DatabaseOperation.AddDevice(getActivity(), deviceName.getText().toString(), phoneNumber.getText().toString())) {
+                if(!(deviceName.getText().toString().length() < 6)){
 
-                        Toast.makeText(getActivity(), "Save Success!", Toast.LENGTH_SHORT).show();
+                    if(!(phoneNumber.getText().toString().length() < 11 )){
 
+                        if(DatabaseOperation.AddDevice(getActivity(), deviceName.getText().toString(), phoneNumber.getText().toString())) {
+
+                            Toast.makeText(getActivity(), "Save Success!", Toast.LENGTH_SHORT).show();
+
+                        }else{
+
+                            Toast.makeText(getActivity(), "Not Save Success!", Toast.LENGTH_SHORT).show();
+                        }
                     }else{
 
-                        Toast.makeText(getActivity(), "Not Save Success!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Phone number not valid!", Toast.LENGTH_SHORT).show();
                     }
+
+                }else{
+
+                    Toast.makeText(getActivity(), "Device name can't be less than 6 character!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

@@ -135,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/middle_section"
                 android:id="@+id/status"
+                android:clickable="false"
                 android:layout_centerHorizontal="true"
                 android:text="Status: "
 

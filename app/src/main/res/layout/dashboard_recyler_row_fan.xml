@@ -136,6 +136,7 @@
                 android:layout_below="@+id/middle_section"
                 android:id="@+id/status"
                 android:layout_centerHorizontal="true"
+                android:clickable="false"
                 android:text="Status: "
                 android:layout_marginTop="-8dp" />
 
@@ -151,13 +152,12 @@
 
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorAccent"
                     android:layout_margin="4dp"
-                    />
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:text="1"
+                    android:textColor="@color/colorWhite" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="0dp"
@@ -171,13 +171,12 @@
 
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="3"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorAccent"
                     android:layout_margin="4dp"
-                    />
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:text="3"
+                    android:textColor="@color/colorWhite" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="0dp"

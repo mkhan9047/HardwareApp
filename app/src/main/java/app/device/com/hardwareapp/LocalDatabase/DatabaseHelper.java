@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String button_table = "CREATE TABLE button (\n" +
                 "button_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "device_id INTEGER, \n" +
-                "relay_no INTEGER UNIQUE, \n" +
+                "relay_no INTEGER , \n" +
                 "btn_name TEXT UNIQUE , \n" +
                 "ON_CODE TEXT, \n" +
                 "OFF_CODE TEXT, \n" +

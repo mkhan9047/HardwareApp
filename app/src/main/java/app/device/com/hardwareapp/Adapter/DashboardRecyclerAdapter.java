@@ -1,5 +1,7 @@
 package app.device.com.hardwareapp.Adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,39 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import app.device.com.hardwareapp.LocalDatabase.DatabaseOperation;
 import app.device.com.hardwareapp.Model.Button;
+import app.device.com.hardwareapp.Model.Device;
 import app.device.com.hardwareapp.R;
 
 public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecyclerAdapter.DashboardHolder> {
 
     private List<Button> buttons = new ArrayList<>();
+    private Context context;
 
+    public DashboardRecyclerAdapter(Context context, List<Button> buttons) {
 
-    public DashboardRecyclerAdapter() {
-
-buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
-                       1, 1, "Fan"
-                    ));
-        buttons.add(new Button("Device-Frist", "Light-Button", "111", "000",
-                1, 0, "Light"
-        ));
-        buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
-                1, 1, "Fan"
-        ));
-        buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
-                1, 0, "Fan"
-        ));
-        buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
-                1, 1, "Fan"
-        ));
-        buttons.add(new Button("Device-Frist", "Light-Button", "111", "000",
-                1, 1, "Light"
-        ));
-        buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
-                1, 0, "Fan"
-        ));
+        this.context = context;
+        this.buttons = buttons;
     }
 
     @Override
@@ -62,7 +50,7 @@ buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
     @Override
     public void onBindViewHolder(DashboardHolder holder, int position) {
 
-        holder.device.setText(buttons.get(position).getDeviceName());
+        holder.device.setText(DatabaseOperation.getDeviceByID(buttons.get(position).getDeviceID(), context).getDeviceName());
         holder.button_name.setText(buttons.get(position).getButtonName());
         if(buttons.get(position).getStatus() == 1){
             holder.aSwitch.setChecked(true);
@@ -93,7 +81,7 @@ buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
         return 1;
     }
 
-    class DashboardHolder extends RecyclerView.ViewHolder{
+    class DashboardHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView device, button_name;
         Switch aSwitch;
@@ -107,6 +95,30 @@ buttons.add(new Button("Device-Frist", "Fan-Button", "111", "000",
             aSwitch = itemView.findViewById(R.id.status);
             onButton = itemView.findViewById(R.id.das_onbutton);
             offButton = itemView.findViewById(R.id.das_offbutton);
+            itemView.setOnClickListener(this);
+
+            onButton.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onClick(View view) {
+                    Device device = DatabaseOperation.getDeviceByID(buttons.get(getAdapterPosition()).getDeviceID(), context);
+                    Toast.makeText(context, String.format("Sending sms to %s and code is %s relay No: %d", device.getDevicePhone(), buttons.get(getAdapterPosition()).getOnButtonCode(), buttons.get(getAdapterPosition()).getRelayNo()), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            offButton.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onClick(View view) {
+                    Device device = DatabaseOperation.getDeviceByID(buttons.get(getAdapterPosition()).getDeviceID(), context);
+                    Toast.makeText(context, String.format("Sending sms to %s and code is %s relay No: %d", device.getDevicePhone(), buttons.get(getAdapterPosition()).getOfButtonCode(), buttons.get(getAdapterPosition()).getRelayNo()), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        @Override
+        public void onClick(View view) {
+
         }
     }
 }

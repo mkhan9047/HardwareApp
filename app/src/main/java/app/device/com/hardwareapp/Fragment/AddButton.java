@@ -25,6 +25,7 @@ import java.util.List;
 import app.device.com.hardwareapp.LocalDatabase.DatabaseOperation;
 import app.device.com.hardwareapp.Model.Device;
 import app.device.com.hardwareapp.R;
+import app.device.com.hardwareapp.Utility.Helper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +61,7 @@ public class AddButton extends Fragment {
             @Override
             public void onClick(View view) {
 
-          boolean what =  DatabaseOperation.AddButton(getActivity(), getDeviceId(selectDevice.getItems().get(selectDevice.getSelectedIndex()).toString(), DatabaseOperation.returnAllDevices(getActivity())),
+          boolean what =  DatabaseOperation.AddButton(getActivity(), Helper.getDeviceId(selectDevice.getItems().get(selectDevice.getSelectedIndex()).toString(), DatabaseOperation.returnAllDevices(getActivity())),
                     Integer.parseInt(relayNo.getSelectedItem().toString()),  buttonName.getText().toString(),
                     onCode.getText().toString(), offcode.getText().toString(), getRadioGruopText(), 1
                     );
@@ -76,13 +77,13 @@ public class AddButton extends Fragment {
 
 
         //select device
-        selectDevice.setItems(ReturnAllDeviceName(DatabaseOperation.returnAllDevices(getActivity())));
+        selectDevice.setItems(Helper.ReturnAllDeviceName(DatabaseOperation.returnAllDevices(getActivity())));
         selectDevice.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @SuppressLint("DefaultLocale")
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
 
-                Toast.makeText(getContext(), String.format("ID: %d", getDeviceId(item, DatabaseOperation.returnAllDevices(getContext()))), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), String.format("ID: %d", Helper.getDeviceId(item, DatabaseOperation.returnAllDevices(getContext()))), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -119,36 +120,6 @@ public class AddButton extends Fragment {
             button = view.findViewById(R.id.add_button_btn);
         }
     }
-
-    private int getDeviceId(String deviceName , List<Device> devices){
-
-        for(Device device : devices){
-
-            if(deviceName.contains(device.getDeviceName())){
-
-                return  device.getDeviceID();
-
-            }
-
-        }
-     return 0;
-    }
-
-    private List<String> ReturnAllDeviceName(List<Device> devices){
-
-        List<String> strings = new ArrayList<>();
-
-        for(Device device : devices){
-
-            strings.add(device.getDeviceName());
-
-        }
-
-        return strings;
-    }
-
-
-
 
     private String getRadioGruopText(){
         int selectedID = radioGroup.getCheckedRadioButtonId();

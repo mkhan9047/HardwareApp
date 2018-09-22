@@ -1,11 +1,8 @@
 package app.device.com.hardwareapp.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -46,7 +43,7 @@ public class Main extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         fragment = new DashboardFragment();
-        FragmentTransction();
+        FragmentTransaction();
     }
 
     @Override
@@ -89,16 +86,16 @@ public class Main extends AppCompatActivity
 
         if(id == R.id.nav_add){
             fragment = new AddDevices();
-            FragmentTransction();
+            FragmentTransaction();
         }else if(id == R.id.nav_dashboard){
             fragment = new DashboardFragment();
-            FragmentTransction();
+            FragmentTransaction();
         }else if(id == R.id.nav_add_btn){
             fragment = new AddButton();
-            FragmentTransction();
+            FragmentTransaction();
         }else if(id == R.id.nav_schedule){
             fragment = new ScheduleTask();
-            FragmentTransction();
+            FragmentTransaction();
         }
 
 
@@ -108,7 +105,7 @@ public class Main extends AppCompatActivity
         return true;
     }
 
-    public void FragmentTransction(){
+    public void FragmentTransaction(){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame,fragment);
         fragmentTransaction.commit();

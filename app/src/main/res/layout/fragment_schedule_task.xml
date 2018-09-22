@@ -84,6 +84,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="17sp"
                             android:layout_margin="8dp"
+                            android:layout_gravity="center_vertical"
                             android:text="@string/select_device"
                             >
                         </TextView>
@@ -93,14 +94,14 @@
                         android:layout_width="0dp"
                         android:layout_weight="1.5"
                         android:gravity="start"
+                        android:background="@drawable/spinner_stroke_bg"
                         android:layout_height="match_parent">
-                        <com.jaredrummler.materialspinner.MaterialSpinner
+
+                        <Spinner
                             android:id="@+id/spinner_device"
                             android:layout_gravity="center_vertical"
-                            android:layout_width="150dp"
-                            app:ms_text_color="#FFFF"
-                            app:ms_background_color="@color/colorPrimary"
-                            android:layout_height="35dp"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
 
                     </LinearLayout>
 
@@ -134,13 +135,14 @@
                         android:layout_weight="1.5"
                         android:gravity="start"
                         android:layout_height="match_parent">
-                        <com.jaredrummler.materialspinner.MaterialSpinner
-                            android:id="@+id/spiner_relay"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="70dp"
-                            app:ms_text_color="#FFFF"
-                            app:ms_background_color="@color/colorPrimary"
-                            android:layout_height="35dp"/>
+                  <Spinner
+                      android:layout_width="wrap_content"
+                      android:entries="@array/relay_no"
+                      android:padding="10dp"
+                      android:id="@+id/relay_spinner"
+                      android:layout_height="45dp">
+
+                  </Spinner>
 
                     </LinearLayout>
 
@@ -173,15 +175,19 @@
                         android:gravity="start|center_vertical"
                         android:layout_height="match_parent">
 
-                        <EditText
+                        <TextView
+                            android:id="@+id/device_name"
                             android:layout_width="match_parent"
+                            android:layout_height="35dp"
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/edittext_background"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            android:paddingStart="5dp"
                             android:paddingEnd="5dp"
-                            android:layout_height="35dp" />
+                            android:textSize="17sp"
+                            android:text="Fan on "
+                            android:textColor="#000000"
+                            android:paddingStart="5dp"
+                            android:gravity="center"
+                            android:singleLine="true" />
 
                     </LinearLayout>
 
@@ -219,22 +225,22 @@
 
 
                         <RadioGroup
+                            android:id="@+id/action_group"
                             android:layout_width="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
-                                android:text="ON"
-                                />
+                                android:text="ON" />
 
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:text="OFF"
-                                />
+                                android:text="OFF" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -291,6 +297,7 @@
                     android:textColor="@color/colorWhite"
                     android:layout_marginEnd="30dp"
                     android:text="Done"
+                    android:id="@+id/save_schedule"
                     android:background="@color/colorAccent"
                     />
             </LinearLayout>

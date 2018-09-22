@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.media.session.PlaybackState;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ import java.util.List;
 
 import app.device.com.hardwareapp.Model.Button;
 import app.device.com.hardwareapp.Model.Device;
+import app.device.com.hardwareapp.Exceptions.NoButtonException;
 
 public class DatabaseOperation {
 
@@ -154,7 +153,7 @@ public class DatabaseOperation {
         return false;
     }
 
-    public static Device getDeviceByID(int id, Context context){
+    public static Device getDeviceByID(int id, Context context) {
 
         Device device = null;
         Cursor cursor = null;
@@ -175,7 +174,7 @@ public class DatabaseOperation {
 
         }
 
-        if(cursor!=null){
+        if (cursor != null) {
 
             cursor.close();
 
@@ -186,33 +185,112 @@ public class DatabaseOperation {
     }
 
 
-    public static List<Button> getAllButtons(Context context){
+    public static List<Button> getAllButtons(Context context) {
         List<Button> buttons = new ArrayList<>();
         Cursor cursor = null;
-        try{
+        try {
 
             SQLiteOpenHelper helper = new DatabaseHelper(context);
             SQLiteDatabase database = helper.getReadableDatabase();
             cursor = database.query("button", new String[]{"device_id", "relay_no", "btn_name", "ON_CODE", "OFF_CODE", "btn_type", "status"}, null, null,
-            null, null, null
+                    null, null, null
             );
 
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 buttons.add(new Button(cursor.getInt(0), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getInt(1), cursor.getInt(6), cursor.getString(5)
                 ));
             }
 
 
-        }catch (SQLiteException e){
+        } catch (SQLiteException e) {
             Log.e("button_error", e.getMessage());
         }
 
-        if(cursor != null){
+        if (cursor != null) {
             cursor.close();
         }
 
         return buttons;
+    }
+
+
+    public static Button getButtonByIdAndRelay(Context context, int device_id, int relay) throws NoButtonException {
+
+        Button buttons = null;
+        Cursor cursor;
+
+        SQLiteOpenHelper helper = new DatabaseHelper(context);
+
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+
+        cursor = database.query("button", new String[]{"device_id", "relay_no", "btn_name", "ON_CODE", "OFF_CODE", "btn_type", "status"}, "device_id=? AND relay_no=?", new String[]{String.valueOf(device_id), String.valueOf(relay)},
+                null, null, null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+
+            buttons = new Button(cursor.getInt(0), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                    cursor.getInt(1), cursor.getInt(6), cursor.getString(5)
+            );
+
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        if (buttons == null) {
+
+            throw new NoButtonException();
+        }
+
+        return buttons;
+    }
+
+    public static List<String> getRelayList(Context context, int deviceId) {
+
+        List<String> holder = new ArrayList<>();
+
+        Cursor cursor = null;
+
+        try {
+            SQLiteOpenHelper helper = new DatabaseHelper(context);
+
+            SQLiteDatabase database = helper.getReadableDatabase();
+
+
+            cursor = database.query("button", new String[]{"relay_no"}, "device_id=?", new String[]{String.valueOf(deviceId)},
+
+                    null, null, null
+            );
+
+
+            if(cursor != null && cursor.moveToFirst()){
+
+
+                while (cursor.moveToNext()) {
+
+                    holder.add(String.valueOf(cursor.getInt(0)));
+
+                }
+
+            }
+
+
+        } catch (SQLiteException e) {
+
+            e.printStackTrace();
+        }
+
+
+        if (cursor != null) {
+
+            cursor.close();
+        }
+
+        return holder;
     }
 
 }

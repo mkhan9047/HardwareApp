@@ -44,13 +44,18 @@ public class DashboardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View view = getView();
+
         if(view != null){
+
             dashRecyler = view.findViewById(R.id.dash_recyler);
         }
 
         dashRecyler.setHasFixedSize(true);
+
         dashRecyler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         DashboardRecyclerAdapter adapter = new DashboardRecyclerAdapter(getActivity(), DatabaseOperation.getAllButtons(getActivity()));
+
         dashRecyler.setAdapter(adapter);
 
       //  List<Button> button = DatabaseOperation.getAllButtons(getActivity());
